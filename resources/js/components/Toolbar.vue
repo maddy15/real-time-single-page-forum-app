@@ -4,19 +4,37 @@
             <v-toolbar-side-icon></v-toolbar-side-icon>
             <v-toolbar-title>Forum App</v-toolbar-title>
             <v-spacer></v-spacer>
-            <v-toolbar-items class="hidden-sm-and-down">
-                <v-btn flat>FORUM</v-btn>
+            <div class="hidden-sm-and-down">
+                <router-link to="/">
+                    <v-btn flat>Forum</v-btn>
+                </router-link>
                 <v-btn flat>ASK QUESTION</v-btn>
                 <v-btn flat>CATEGORY</v-btn>
-                <v-btn flat>LOGIN</v-btn>
-            </v-toolbar-items>
+                <router-link to="/login" v-if="!hasToken">
+                    <v-btn flat>Login</v-btn>
+                </router-link>
+                <v-btn flat @click="logout()" v-else>LOGOUT</v-btn>
+                {{hasToken}}
+            </div>
+
+            
         </v-toolbar>
     </div>
 </template>
 
 <script>
     export default {
-        
+
+        methods: {
+            logout() {
+                User.logout();
+            }
+        },
+        computed: {
+            hasToken() {
+                return User.loggedIn(); 
+            }
+        },
     }
 </script>
 

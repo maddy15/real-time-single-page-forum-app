@@ -19,8 +19,14 @@ Vue.component('AppHome', require('./components/AppHome.vue'));
 import Vue from 'vue'
 import Vuetify from 'vuetify'
 import router from './Router/router.js'
+import User from './Helpers/User.js';
+import AppStorage from './Helpers/AppStorage.js';
 
-Vue.use(Vuetify)
+Vue.use(Vuetify);
+
+window.User = User;
+window.AppStorage = AppStorage;
+console.log(User.name());
 const app = new Vue({
     el: '#app',
     router
