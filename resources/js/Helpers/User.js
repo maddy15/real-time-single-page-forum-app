@@ -14,10 +14,11 @@ class User {
         
         const token = res.data.access_token;
         const user = res.data.user;
-
+        
         if(Token.isValid(token))
         {
             AppStorage.store(user,token);
+            window.location = '/forum';
         }
     }
 
@@ -36,6 +37,7 @@ class User {
     logout()
     {
         AppStorage.clear();
+        window.location = '/forum';
     }
 
     name()
@@ -44,13 +46,18 @@ class User {
             return AppStorage.getUser();
         }
     }
-    
+
     id()
     {
         if(this.loggedIn()){
             const payload = Token.payload(AppStorage.getToken());
             return payload.sub;
         }
+    }
+
+    own(id)
+    {
+        return this.id() == id;
     }
 }
 

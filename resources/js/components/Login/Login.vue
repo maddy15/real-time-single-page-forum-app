@@ -18,6 +18,9 @@
                 ></v-text-field>
 
                 <v-btn color="green" type="submit">Login</v-btn>
+                <router-link to="/signup">
+                    <v-btn color="blue">Signup</v-btn>
+                </router-link>
             </v-form>
         </v-container>
     </div>
@@ -35,9 +38,10 @@
         },
         methods: {
             login() {
-                User.login(this.form)
+                User.login(this.form);
             }
         },
+       
     }
 </script>
 

@@ -5,16 +5,12 @@
             <v-toolbar-title>Forum App</v-toolbar-title>
             <v-spacer></v-spacer>
             <div class="hidden-sm-and-down">
-                <router-link to="/">
-                    <v-btn flat>Forum</v-btn>
+                <span v-for="item in items">
+                <router-link  :to="item.to" v-if="item.show" :key="item.title">
+                    <v-btn flat>{{item.title}}</v-btn>
                 </router-link>
-                <v-btn flat>ASK QUESTION</v-btn>
-                <v-btn flat>CATEGORY</v-btn>
-                <router-link to="/login" v-if="!hasToken">
-                    <v-btn flat>Login</v-btn>
-                </router-link>
-                <v-btn flat @click="logout()" v-else>LOGOUT</v-btn>
-                {{hasToken}}
+               
+                </span>
             </div>
 
             
@@ -24,17 +20,22 @@
 
 <script>
     export default {
-
-        methods: {
-            logout() {
+        data() {
+            return {
+                items : [
+                    {title:'Forum',to:'/forum',show:true},
+                    {title:'Ask Question',to:'/create',show:User.loggedIn()},
+                    {title:'Category',to:'/category',show:true},
+                    {title:'Login',to:'/login',show:!User.loggedIn()},
+                    {title:'Logout',to:'/logout',show:User.loggedIn()},
+                ]
+            }
+        },
+         created(){
+            EventBus.$on('logout',()=>{
                 User.logout();
-            }
-        },
-        computed: {
-            hasToken() {
-                return User.loggedIn(); 
-            }
-        },
+            });
+        }
     }
 </script>
 

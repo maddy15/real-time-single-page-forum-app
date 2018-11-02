@@ -21,12 +21,16 @@ import Vuetify from 'vuetify'
 import router from './Router/router.js'
 import User from './Helpers/User.js';
 import AppStorage from './Helpers/AppStorage.js';
-
+import VueSimplemde from 'vue-simplemde'
+import 'simplemde/dist/simplemde.min.css'
+import md from 'marked'
 Vue.use(Vuetify);
-
+Vue.use(VueSimplemde);
+window.md = md;
 window.User = User;
+window.EventBus = new Vue();
+
 window.AppStorage = AppStorage;
-console.log(User.name());
 const app = new Vue({
     el: '#app',
     router
