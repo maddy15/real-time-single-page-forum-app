@@ -6,7 +6,7 @@
                     <app-question v-for="question of questions" :key="question.path" :question="question"></app-question>
                 </v-flex>
                 <v-flex xs4>
-                    Sidebar
+                    <app-sidebar></app-sidebar>
                 </v-flex>
             </v-layout>
         </v-container>
@@ -15,9 +15,11 @@
 
 <script>
 import Question from './Question';
+import Sidebar from './AppSidebar';
 export default {
     components:{
-        'appQuestion' : Question
+        'appQuestion' : Question,
+        'appSidebar' : Sidebar,
     },
     data() {
         return {
