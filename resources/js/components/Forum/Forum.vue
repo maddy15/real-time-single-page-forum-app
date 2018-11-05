@@ -3,7 +3,11 @@
         <v-container fluid grid-list-md>
             <v-layout row wrap>
                 <v-flex xs8>
-                    <app-question v-for="question of questions" :key="question.path" :question="question"></app-question>
+                    <transition enter-active-class="animated lightSpeedIn" leave-active-class="animated lightSpeedOut" mode="out-in" appear>
+                        <div :key="category_id">
+                            <app-question v-for="question of filteredQuestion" :key="question.path" :question="question"></app-question>
+                        </div>
+                    </transition>
                 </v-flex>
                 <v-flex xs4>
                     <app-sidebar></app-sidebar>
@@ -23,7 +27,8 @@ export default {
     },
     data() {
         return {
-             questions: {}
+             questions: {},
+             category_id:0,
         }
     },
     methods: {
@@ -35,9 +40,16 @@ export default {
             }
         }
     },
+    computed: {
+        filteredQuestion() {
+            return this.category_id != 0 ? this.questions.filter((element) => element.category_id == this.category_id) : this.questions;
+        }
+    },
     created(){
-       
-        this.redirect();
+        EventBus.$on('filterquestion',(e)=>{
+            this.category_id = e;
+        })
+        if( User.loggedIn()) this.redirect();
         axios.get('/api/questions')
         .then(res => this.questions = res.data.data)
         .catch(err => console.log(err.response.data));
@@ -46,5 +58,7 @@ export default {
 </script>
 
 <style scoped>
-
+.lightSpeedIn,.lightSpeedOut,.slideInUp,.slideInDown {
+  -webkit-animation-duration: 400ms;
+}
 </style>

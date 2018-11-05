@@ -3,6 +3,11 @@
         <app-edit-question v-if="edit" :question="question"></app-edit-question>
         <div v-else>
             <app-show-question :question="question"></app-show-question>
+            <v-container>
+
+            <app-replies :question="question"></app-replies>
+            <app-new-reply :slug="question.slug"></app-new-reply>
+            </v-container>
         </div>
     </div>
 </template>
@@ -10,6 +15,8 @@
 <script>
 import ShowQuestion from './ShowQuestion';
 import EditQuestion from './EditQuestion';
+import Replies from '../Replies/Replies';
+import NewReply from '../Replies/NewReply';
     export default {
         data() {
             return {
@@ -42,6 +49,8 @@ import EditQuestion from './EditQuestion';
         components:{
             'appShowQuestion' : ShowQuestion,
             'appEditQuestion' : EditQuestion,
+            'appReplies' : Replies,
+            'appNewReply' : NewReply,
         }
     }
 </script>

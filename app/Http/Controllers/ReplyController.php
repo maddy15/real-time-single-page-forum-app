@@ -44,9 +44,10 @@ class ReplyController extends Controller
      */
     public function store(Question $question,Request $request)
     {
+        
         $reply = $question->replies()->create($request->all());
 
-        return response(['reply' =>$reply],Response::HTTP_CREATED);
+        return response(new ReplyResource($reply),Response::HTTP_CREATED);
     }
 
     /**
@@ -82,7 +83,7 @@ class ReplyController extends Controller
     {
         // return $reply;
         $reply->update($request->all());
-        return response('Updated Reply',Response::HTTP_ACCEPTED);
+        return response(new ReplyResource($reply),Response::HTTP_ACCEPTED);
     }
 
     /**
@@ -93,6 +94,7 @@ class ReplyController extends Controller
      */
     public function destroy(Question $question,Reply $reply)
     {
+        // return $reply;
         $reply->delete();
         return response(null,Response::HTTP_NO_CONTENT);
     }

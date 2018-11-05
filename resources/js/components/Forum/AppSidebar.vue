@@ -7,8 +7,14 @@
         </v-toolbar>
 
         <v-list>
+          <v-list-tile>
+              <v-list-tile-content @click="categoryFilter(0)">
+                  <v-list-tile-title>All</v-list-tile-title>
+                  <v-divider></v-divider>
+              </v-list-tile-content>
+          </v-list-tile>
           <v-list-tile  v-for="category in categories" :key="category.id">
-              <v-list-tile-content>
+              <v-list-tile-content @click="categoryFilter(category.id)">
                   <v-list-tile-title>{{category.name}}</v-list-tile-title>
                   <v-divider></v-divider>
               </v-list-tile-content>
@@ -24,6 +30,11 @@
         data() {
             return {
                 categories: {}
+            }
+        },
+        methods: {
+            categoryFilter(id) {
+                EventBus.$emit('filterquestion',id);
             }
         },
         created(){

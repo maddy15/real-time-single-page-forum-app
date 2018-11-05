@@ -10,7 +10,7 @@ class Question extends Model
 
 
     protected $guarded = [];
-
+    protected $with = ['replies'];
     protected static function boot(){
         parent::boot();
         static::creating(function($question){
@@ -28,7 +28,7 @@ class Question extends Model
     }
 
     public function replies(){
-        return $this->hasMany('App\Model\Reply');
+        return $this->hasMany('App\Model\Reply')->latest();
     }
 
     public function category(){
