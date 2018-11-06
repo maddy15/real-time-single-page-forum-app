@@ -28,6 +28,7 @@
                     this.$emit('repCount');
                     this.form.body = '';
                     window.scrollTo(0,0);
+                    console.log(res);
                 })
                 .catch(err => console.log(err.response.data));
             }

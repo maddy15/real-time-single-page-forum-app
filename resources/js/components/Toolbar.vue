@@ -4,13 +4,14 @@
             <v-toolbar-side-icon></v-toolbar-side-icon>
             <v-toolbar-title>Forum App</v-toolbar-title>
             <v-spacer></v-spacer>
+            
+            <app-notification v-if="loggedIn"></app-notification>
             <div class="hidden-sm-and-down">
-                <span v-for="item in items">
-                <router-link  :to="item.to" v-if="item.show" :key="item.title">
+                <router-link  v-for="item in items" :to="item.to" v-if="item.show" :key="item.title">
                     <v-btn flat>{{item.title}}</v-btn>
                 </router-link>
                
-                </span>
+            
             </div>
 
             
@@ -19,9 +20,11 @@
 </template>
 
 <script>
+    import Notification from './AppNotification'
     export default {
         data() {
             return {
+                loggedIn:User.loggedIn(),
                 items : [
                     {title:'Forum',to:'/forum',show:true},
                     {title:'Ask Question',to:'/create',show:User.loggedIn()},
@@ -35,6 +38,9 @@
             EventBus.$on('logout',()=>{
                 User.logout();
             });
+        },
+        components:{
+            'appNotification' : Notification
         }
     }
 </script>

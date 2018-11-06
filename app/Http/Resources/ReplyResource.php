@@ -23,7 +23,12 @@ class ReplyResource extends JsonResource
             'user_id' => $this->user->id,
             'created_at' => $this->created_at->diffForHumans(),
             'updated_at' => $this->updated_at->diffForHumans(),
-
+            'likes' => array(
+                'reply_id' => $this->id,
+                'like_count' => $this->likes->count(),
+                'liked' => !! $this->likes->where('user_id',auth()->id())->count()
+            ),
+            
 
         ];
     }

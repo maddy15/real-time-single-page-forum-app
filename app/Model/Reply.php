@@ -22,7 +22,7 @@ class Reply extends Model
         return $this->belongsTo('App\Model\Question');
     }
 
-    public function like(){
+    public function likes(){
         return $this->hasMany('App\Model\Like');
     }
 }

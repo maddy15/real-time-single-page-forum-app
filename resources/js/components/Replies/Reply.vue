@@ -5,6 +5,8 @@
                 <v-card-title>
                     <div class="headline">{{item.user}}</div>
                     <div class="ml-2">Said {{item.updated_at}}</div>
+                    <v-spacer></v-spacer>
+                    <app-like :likes="item.likes"></app-like>
                 </v-card-title>
                 <v-divider></v-divider>
                 <app-edit-reply v-if="editing" :reply="data" @cancel="editing = false" @editReply="pass($event)"></app-edit-reply>
@@ -28,6 +30,7 @@
 
 <script>
     import EditReply from './EditReply'
+    import Like from '../Likes/Like'
     export default {
         props:['data','index'],
         data() {
@@ -66,7 +69,8 @@
             // EventBus.$on('cancel',()=>{ this.editing = false})
         },
         components:{
-            'appEditReply':EditReply
+            'appEditReply':EditReply,
+            'appLike' : Like
         }
     }
 </script>
