@@ -13,8 +13,26 @@ import Reply from '../Replies/Reply';
         components:{
             'appReply' : Reply
         },
+        methods: {
+            pushNotification() {
+                Echo.private('App.User.' + User.id())
+                .notification((notification) => {
+                    console.log(notification);
+                    this.question.replies.unshift(notification.reply);
+                });
+            },
+            deleteReplies(){
+                 Echo.channel('deleteReplyChannel')
+                .listen('DeleteReplyEvent', (e) => {
+                   const rec = this.question.replies.find(element => element.id == e.id)
+                   const index = this.question.replies.indexOf(rec);
+                   this.question.replies.splice(index,1);
+                });
+            }
+        },
         created(){
-
+            this.deleteReplies();
+            this.pushNotification();
             EventBus.$on('newReply',(e)=>{
                 this.question.replies.unshift(e);
             });

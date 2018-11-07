@@ -1,8 +1,9 @@
 class Token {
     isValid(token){
+        
         const payload = this.payload(token);
         if(payload){
-            return "http://localhost:8000/api/auth/signup" || "http://localhost:8000/api/auth/login" ? true : false;
+            return payload.iss == "http://localhost:8000/api/auth/signup" || "http://localhost:8000/api/auth/login" ? true : false;
         }
 
         return false;
@@ -15,7 +16,17 @@ class Token {
     }
 
     decode(payload){
-        return JSON.parse(atob(payload))
+        if(this.isBase64(payload)) return JSON.parse(atob(payload))
+        return false;
+    }
+
+    isBase64(str){
+        try{
+            return btoa(atob(str)).replace(/=/g,'') == str;
+        }
+        catch(err){
+            return false;
+        }
     }
 }
 

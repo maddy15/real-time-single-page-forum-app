@@ -9,6 +9,8 @@ use Symfony\Component\HttpFoundation\Response;
 
 use App\Http\Resources\ReplyResource;
 use App\Notifications\NewReplyNotification;
+use App\Events\DeleteReplyEvent;
+use App\Events\ReplyCountEvent;
 class ReplyController extends Controller
 {
     public function __construct()
@@ -50,9 +52,10 @@ class ReplyController extends Controller
         $user = $question->user;
         if($reply->user_id !== $question->user_id)
         {
-
             $user->notify(new NewReplyNotification($reply));
         }
+        
+        broadcast(new ReplyCountEvent($reply))->toOthers();
         return response(new ReplyResource($reply),Response::HTTP_CREATED);
     }
 
@@ -100,8 +103,9 @@ class ReplyController extends Controller
      */
     public function destroy(Question $question,Reply $reply)
     {
-        // return $reply;
+        
         $reply->delete();
+        broadcast(new DeleteReplyEvent($reply->id))->toOthers();
         return response(null,Response::HTTP_NO_CONTENT);
     }
 }

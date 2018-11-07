@@ -48,7 +48,14 @@
                 return md.parse(this.question.body) || '';
             }
         },
-        props:['question']
+        props:['question'],
+        created(){
+              Echo.channel('replyCountChannel')
+            .listen('ReplyCountEvent', (e) => {
+                this.question.replies.unshift(e.reply);
+                console.log(e);
+            });
+        }
     }
 </script>
 

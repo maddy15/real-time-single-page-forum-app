@@ -24,6 +24,7 @@
 </template>
 
 <script>
+
     export default {
         data() {
             return {
@@ -36,10 +37,13 @@
             getNotifications() {
                 axios.post('/api/notifications')
                 .then(res => {
-                    console.log(res);
+                    // console.log(res);
                     this.read = res.data.read;
                     this.unread = res.data.unread;
                     this.unreadCount = res.data.unread.length;
+                })
+                .catch(error => {
+                    Exception.handle(error);
                 });
             },
             markRead(notification)
@@ -63,6 +67,13 @@
             if(User.loggedIn){
                 this.getNotifications();
             }
+
+            Echo.private('App.User.' + User.id())
+                .notification((notification) => {
+                    console.log('not',notification);
+                    this.unread.unshift(notification);
+                    this.unreadCount++;
+                });
         }
     }
 </script>

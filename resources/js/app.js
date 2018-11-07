@@ -20,6 +20,7 @@ import Vue from 'vue'
 import Vuetify from 'vuetify'
 import router from './Router/router.js'
 import User from './Helpers/User.js';
+import Exception from './Helpers/Exception.js';
 import AppStorage from './Helpers/AppStorage.js';
 import VueSimplemde from 'vue-simplemde'
 import 'simplemde/dist/simplemde.min.css'
@@ -28,6 +29,7 @@ Vue.use(Vuetify);
 Vue.use(VueSimplemde);
 window.md = md;
 window.User = User;
+window.Exception = Exception;
 window.EventBus = new Vue();
 
 window.AppStorage = AppStorage;

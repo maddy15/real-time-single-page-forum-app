@@ -6,7 +6,7 @@
             <v-container>
 
             <app-replies :question="question"></app-replies>
-            <app-new-reply :slug="question.slug"></app-new-reply>
+            <app-new-reply :slug="question.slug" v-if="loggedIn"></app-new-reply>
             </v-container>
         </div>
     </div>
@@ -21,7 +21,13 @@ import NewReply from '../Replies/NewReply';
         data() {
             return {
                 question: null,
-                edit:false
+                edit:false,
+
+            }
+        },
+        computed: {
+            loggedIn() {
+                return User.loggedIn(); 
             }
         },
         methods: {
